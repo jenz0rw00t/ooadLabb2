@@ -1,23 +1,25 @@
 ﻿using System;
+using System.Collections.Generic;
+using ooadLabb2.Models;
 using ooadLabb2.Services;
 
 namespace ooadLabb2
 {
     public class ConsoleProgram
     {
-        private IAstronautService astroService;
+        private IAstronautService<JsonModel> astroService;
 
-        public ConsoleProgram(IAstronautService astroService)
+        public ConsoleProgram(IAstronautService<JsonModel> astroService)
         {
             this.astroService = astroService;
         }
 
         public void Run()
         {
-            Console.WriteLine("Press enter to get the astronauts that are currently in space");
+            Console.WriteLine("Press ENTER to get the astronauts that are currently in space!");
             Console.ReadLine();
             printAstronautsInSpace();
-            Console.Write("\nPress enter to quit");
+            Console.Write("\nPress ENTER to quit");
             Console.ReadLine();
             Console.WriteLine("Bye!");
         }
@@ -25,7 +27,8 @@ namespace ooadLabb2
         private void printAstronautsInSpace()
         {
             Console.WriteLine("Loading...\n");
-            var list = astroService.GetAstronautsInSpace();
+            var jsonToAstronaut = new JsonToAstronautAdapter(astroService);
+            var list = jsonToAstronaut.GetAstronautsInSpace();
             Console.WriteLine("The following people are in space right now: ");
             foreach (var astronaut in list)
             {

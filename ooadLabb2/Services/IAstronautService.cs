@@ -3,8 +3,8 @@ using ooadLabb2.Models;
 
 namespace ooadLabb2.Services
 {
-    public interface IAstronautService
+    public interface IAstronautService<T>
     {
-        public List<Astronaut> GetAstronautsInSpace();
+        public T GetAstronautsInSpace();
     }
 }

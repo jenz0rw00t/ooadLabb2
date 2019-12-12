@@ -5,9 +5,8 @@ using ooadLabb2.Models;
 
 namespace ooadLabb2.Services
 {
-    public class AstronautService : IAstronautService
+    public class AstronautService<JsonModel> : IAstronautService<JsonModel>
     {
-        private List<Astronaut> astronauts;
         private IJsonParser jsonParser;
         private readonly string url;
 
@@ -17,15 +16,12 @@ namespace ooadLabb2.Services
             url = "http://api.open-notify.org/astros.json";
         }
 
-        public List<Astronaut> GetAstronautsInSpace()
+        public JsonModel GetAstronautsInSpace()
         {
             var client = new WebClient();
             var json = client.DownloadString(url);
 
-            JsonModel jsonObject = jsonParser.deserialize<JsonModel>(json);
-            astronauts = jsonObject.People;
-
-            return astronauts;
+            return jsonParser.deserialize<JsonModel>(json);
         }
     }
 }
